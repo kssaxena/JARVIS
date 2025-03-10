@@ -1,40 +1,67 @@
-import React from "react";
-import useSpeechRecognition from "../../hooks/useSpeechRecognition.js";
-import useTextToSpeech from "../../hooks/useTextToSpeech.js";
+import React, { useState } from "react";
+import useSpeechRecognition from "../../hooks/useSpeechRecognition";
+import useTextToSpeech from "../../hooks/useTextToSpeech";
+import { getGeminiResponse } from "../../services/geminiService";
 
 const Home = () => {
   console.log("🏠 Home Component Loaded!");
-
   const { speak } = useTextToSpeech();
+  const [response, setResponse] = useState("");
+  const [inputText, setInputText] = useState(""); // State for text input
 
-  const handleCommand = (command) => {
+  const handleCommand = async (command) => {
     console.log("🛠️ Processing Command:", command);
-    let reply = "I didn't understand.";
-    if (command.includes("hello")) reply = "Hello! How can I assist you?";
-    speak(reply);
+    setResponse("Thinking...");
+
+    const aiReply = await getGeminiResponse(command); // Get AI response
+    setResponse(aiReply);
+    speak(aiReply); // Speak out the response
   };
 
-  const { startListening, stopListening, isListening } =
-    useSpeechRecognition(handleCommand);
+  const { startListening, isListening } = useSpeechRecognition(handleCommand);
+
+  // Handle text input submission
+  const handleTextSubmit = async () => {
+    if (!inputText.trim()) return; // Ignore empty input
+    setResponse("Thinking...");
+
+    const aiReply = await getGeminiResponse(inputText);
+    setResponse(aiReply);
+    // speak(aiReply); // Speak out response
+    setInputText(""); // Clear input after sending
+  };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center lightDark h-screen ">
       <h1>J.A.R.V.I.S. Assistant</h1>
+
+      {/* Speech Recognition Button */}
       <button
-        onClick={() => {
-          console.log("🖱️ Button Clicked!");
-          startListening();
-        }}
-        className="p-2 bg-blue-500 text-white"
+        onClick={startListening}
+        className="p-2 bg-blue-500 text-white mt-2"
       >
         {isListening ? "Listening..." : "Start Listening"}
       </button>
-      <button
-        onClick={stopListening}
-        className="mt-2 p-2 bg-red-500 text-white"
-      >
-        Stop Listening
-      </button>
+
+      {/* Text Input Search */}
+      <div className="mt-4 flex gap-2">
+        <input
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          placeholder="Type your question..."
+          className="p-2 border rounded-lg"
+        />
+        <button
+          onClick={handleTextSubmit}
+          className="p-2 bg-green-500 text-white"
+        >
+          Ask
+        </button>
+      </div>
+
+      {/* Response Output */}
+      <p className="mt-4 text-lg">{response}</p>
     </div>
   );
 };

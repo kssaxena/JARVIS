@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+.lightDark {
+  @apply bg-[#2D2F38];
+}
+
+.orange {
+  @apply bg-[#FD632D];
+}
+
+.dark {
+  @apply bg-[#22242B];
+}
+
+/* orange: #FD632D */
+/* dark: #22242B */
+
+/* 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -67,4 +83,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
