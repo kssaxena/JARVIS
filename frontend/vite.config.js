@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => {
     define: {
       "process.env.OPEN_AI_KEY": JSON.stringify(env.OPEN_AI_KEY),
       "process.env.GEMINI_AI_KEY": JSON.stringify(env.GEMINI_AI_KEY),
+      "process.env.DomainUrl": JSON.stringify(env.DomainUrl),
     },
     plugins: [tailwindcss(), react()],
   };

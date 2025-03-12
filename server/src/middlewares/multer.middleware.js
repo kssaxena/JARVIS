@@ -4,7 +4,7 @@ import multer from "multer";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     console.log("from Multer", file);
-    cb(null, "./public/tmp/productImages");
+    cb(null, "./public/temp/userImage");
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}-${file.originalname}`);

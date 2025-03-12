@@ -8,6 +8,12 @@ const Home = () => {
   const { speak } = useTextToSpeech();
   const [response, setResponse] = useState("");
   const [inputText, setInputText] = useState(""); // State for text input
+  const [activeSection, setActiveSection] = useState("Home");
+
+  const sidebarVariants = {
+    hidden: { opacity: 0, x: -100 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
+  };
 
   const handleCommand = async (command) => {
     console.log("🛠️ Processing Command:", command);
@@ -32,7 +38,78 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col items-center lightDark h-screen ">
+    <div className="flex flex-col items-center h-screen ">
+      <motion.aside
+        className="w-64 text-black p-4 shadow-lg fixed"
+        initial="hidden"
+        animate="visible"
+        variants={sidebarVariants}
+      >
+        <nav>
+          <ul>
+            <li
+              className={`p-4 rounded-md mb-2 cursor-pointer transition-all duration-300 ${
+                activeSection === "Home"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              }`}
+              onClick={() => setActiveSection("Home")}
+            >
+              {<User />}Home
+            </li>
+            <li
+              className={`p-4 rounded-md mb-2 cursor-pointer transition-all duration-300 ${
+                activeSection === "Vendors (Under review)"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              }`}
+              onClick={() => setActiveSection("Vendors (Under review)")}
+            >
+              {<ListOrdered />}Vendors (Under review)
+            </li>
+            <li
+              className={`p-4 rounded-md mb-2 cursor-pointer transition-all duration-300 ${
+                activeSection === "Vendors (Verified)"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              }`}
+              onClick={() => setActiveSection("Vendors (Verified)")}
+            >
+              {<Newspaper />}Vendors (Verified)
+            </li>
+            <li
+              className={`p-4 rounded-md mb-2 cursor-pointer transition-all duration-300 ${
+                activeSection === "Products"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              }`}
+              onClick={() => setActiveSection("Products")}
+            >
+              {<Package />}Products
+            </li>
+            <li
+              className={`p-4 rounded-md mb-2 cursor-pointer transition-all duration-300 ${
+                activeSection === "Orders"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              }`}
+              onClick={() => setActiveSection("Orders")}
+            >
+              {<ScanLine />}Orders
+            </li>
+            <li
+              className={`p-4 rounded-md cursor-pointer transition-all duration-300 ${
+                activeSection === "Promotions"
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-300 text-black"
+              }`}
+              onClick={() => setActiveSection("Promotions")}
+            >
+              {<Heart />}Promotions
+            </li>
+          </ul>
+        </nav>
+      </motion.aside>
       <h1>J.A.R.V.I.S. Assistant</h1>
 
       {/* Speech Recognition Button */}

@@ -2,12 +2,12 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-const allowedOrigins = [process.env.ORIGIN_1];
+// const allowedOrigins = [process.env.ORIGIN_1];
 
 const app = express();
 
 const corsOptions = {
-  origin: allowedOrigins,
+  origin: process.env.ORIGIN_1,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -30,29 +30,9 @@ app.use((req, res, next) => {
 });
 
 // routers
-// import vendorRouter from "./routes/vendor.routes.js";
-// import productRouter from "./routes/product.routes.js";
-// import orderRouter from "./routes/order.routes.js";
-// import userRouter from "./routes/user.routes.js";
-// import adminRouter from "./routes/admin.routes.js";
-// import categoryRouter from "./routes/category-and-subcategory.routes.js";
-
-// //vendor routes
-// app.use("/api/v1/vendor", vendorRouter);
-
-// //product routes
-// app.use("/api/v1/products", productRouter);
-
-// //orders routes
-// app.use("/api/v1/orders", orderRouter);
+import userRouter from "./routes/users.routes.js";
 
 // //user routes
-// app.use("/api/v1/users", userRouter);
-
-// //admin routes
-// app.use("/api/v1/admins", adminRouter);
-
-// //category and subcategory routes
-// app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/users", userRouter);
 
 export { app };

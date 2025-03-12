@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
+import { Register } from "./components/Register";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="absolute top-0  h-screen w-screen bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))] overflow-x-hidden antialiased selection:bg-cyan-500 selection:text-cyan-900 font-Fredoka">
-      <div className="text-black">
+    <div className="bg-[#22242B] h-screen w-screen overflow-hidden text-neutral-400 ">
+      <div>
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
+          <Route path="/" element={<Register />} />
         </Routes>
       </div>
     </div>

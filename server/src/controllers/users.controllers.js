@@ -1,8 +1,10 @@
-import { User } from "../models/users.models";
+import { User } from "../models/users.models.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
+// import UploadImages from "../middlewares/multer.middleware.js";
+import { UploadImages } from "../utils/Imagekit.io.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -22,6 +24,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
 
 const RegisterUser = asyncHandler(async (req, res) => {
   const { name, number, email, password } = req.body;
+  console.log(name, number, email, password);
 
   if (
     [name, email, password].some(function (field) {
@@ -35,11 +38,20 @@ const RegisterUser = asyncHandler(async (req, res) => {
 
   if (existingUser) throw new ApiError(404, "User already exists");
 
+  const ImageFile = req.file;
+  const UploadedImage = await UploadImages(ImageFile.filename, {
+    folderStructure: `all-users`,
+  });
   const newUser = await User.create({
     name,
     number,
     email,
     password,
+    images: {
+      url: UploadedImage.url,
+      altText: name,
+      fileId: UploadedImage.fileId,
+    },
   });
 
   const CreatedUser = await User.findById(newUser._id).select("-password ");
@@ -54,17 +66,17 @@ const RegisterUser = asyncHandler(async (req, res) => {
     CreatedUser?._id
   );
 
-  SendMail(
-    email,
-    "Successfully registered at JARVIS",
-    "Welcome to JARVIS",
-    `<b><h1>Congratulations Mr./Mrs. ${name} </h1>,<br/> <h3>You have successfully register to JARVIS.<br/>
-    Here are your Account details
-      Name:${name}
-      Contact:${number}
-      Email:${email}
-   </h3> <b/>`
-  );
+  // SendMail(
+  //   email,
+  //   "Successfully registered at JARVIS",
+  //   "Welcome to JARVIS",
+  //   `<b><h1>Congratulations Mr./Mrs. ${name} </h1>,<br/> <h3>You have successfully register to JARVIS.<br/>
+  //   Here are your Account details
+  //     Name:${name}
+  //     Contact:${number}
+  //     Email:${email}
+  //  </h3> <b/>`
+  // );
 
   const options = {
     httpOnly: true,

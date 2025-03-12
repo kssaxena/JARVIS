@@ -15,7 +15,7 @@ export const UploadImages = async (
 ) => {
   try {
     // Read file asynchronously
-    const data = await fs.readFile(`./public/tmp/productImages/${imageName}`);
+    const data = await fs.readFile(`./public/temp/userImage/${imageName}`);
 
     console.log(folderDetails);
     // Upload image to ImageKit
@@ -29,7 +29,7 @@ export const UploadImages = async (
     });
 
     // Delete the temporary image after uploading
-    await fs.unlink(`./public/tmp/productImages/${imageName}`);
+    await fs.unlink(`./public/temp/userImage/${imageName}`);
 
     return uploadedImg;
   } catch (error) {
