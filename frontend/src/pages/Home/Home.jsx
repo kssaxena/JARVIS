@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import useSpeechRecognition from "../../hooks/useSpeechRecognition";
 import useTextToSpeech from "../../hooks/useTextToSpeech";
 import { getGeminiResponse } from "../../services/geminiService";
+import { motion } from "framer-motion";
+import { User, ListOrdered, Newspaper, Package, Heart, ScanLine } from "lucide-react";
 
 const Home = () => {
   console.log("🏠 Home Component Loaded!");
@@ -38,7 +40,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex flex-col items-center h-screen ">
+    <div className="flex flex-col h-screen ">
       <motion.aside
         className="w-64 text-black p-4 shadow-lg fixed"
         initial="hidden"

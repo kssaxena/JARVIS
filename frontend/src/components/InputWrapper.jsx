@@ -32,7 +32,7 @@ const Input = ({
         disabled={disabled}
         required={required}
         autoComplete={autoComplete}
-        className={`w-full bg-transparent px-4 py-2 text-base border rounded-lg focus:outline-none m-2 ${
+        className={`w-full bg-transparent px-4 py-2 text-base border rounded-lg focus:outline-none m-2 text-[#FD632D]  ${
           error ? "border-red-500" : "border-gray-300"
         } disabled:bg-gray-200 disabled:cursor-not-allowed`}
       />

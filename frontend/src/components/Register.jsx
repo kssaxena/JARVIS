@@ -77,45 +77,62 @@ export const Register = () => {
 
   return (
     <div>
-      <h1>Register</h1>
-      <form ref={formRef} onSubmit={handleRegister}>
-        <Input label={"Name"} name="name" />
-        <Input label={"Phone"} name="number" type="number" />
-        <Input label={"Email"} name="email" type="email" />
-        <Input label={"Password"} name="password" type="password" />
-        <Input
-          label={"Upload Profile Picture"}
-          name={`image`}
-          type="file"
-          onChange={(e) => {
-            handleImageFileChange(e);
-          }}
-        />
-        {imagePreview && (
-          <div className="flex items-center gap-3">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-16 h-16 object-cover rounded-md border"
+      {/* <h1>Register</h1> */}
+      <div className="h-screen w-full flex justify-center items-center">
+        <form
+          ref={formRef}
+          onSubmit={handleRegister}
+          className="w-fit flex flex-col justify-center items-center gap-3.5 shadow-2xl shadow-[#FD632D] p-10 rounded-xl "
+        >
+          <Input label={"Name"} name="name" placeholder="Name" />
+          <Input
+            label={"Phone"}
+            name="phoneNumber"
+            type="number"
+            placeholder="Contact number"
+          />
+          <Input
+            label={"Email"}
+            name="email"
+            type="email"
+            placeholder="Email"
+          />
+          <Input
+            label={"Password"}
+            name="password"
+            type="password"
+            placeholder="Password"
+          />
+          <div className="flex justify-center items-end gap-5">
+            <Input
+              label={"Upload Profile Picture"}
+              name={`image`}
+              type="file"
+              onChange={(e) => {
+                handleImageFileChange(e);
+              }}
             />
+            {imagePreview && (
+              <div className="flex items-center justify-center  gap-3">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="w-16 h-16 object-cover rounded-md border"
+                />
 
-            {/* Cancel Button */}
-            <button
-              onClick={handleImageCancel}
-              className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition"
-            >
-              Cancel
-            </button>
+                {/* Cancel Button */}
+                <button
+                  onClick={handleImageCancel}
+                  className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
-        )}
-        <Button
-          label={"Register"}
-          //   onClick={() => {}}
-          //   loading={loading}
-          variant="primary"
-          type="submit"
-        />
-      </form>
+          <Button label={"Register"} variant="primary" type="submit" />
+        </form>
+      </div>
     </div>
   );
 };

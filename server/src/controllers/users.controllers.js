@@ -23,13 +23,20 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const RegisterUser = asyncHandler(async (req, res) => {
-  const { name, number, email, password } = req.body;
-  console.log(name, number, email, password);
+  const { name, phoneNumber, email, password } = req.body;
+  console.log(name, phoneNumber, email, password);
 
+  // if (
+  //   [name, email, password].some(function (field) {
+  //     field.trim() === "";
+  //   })
+  // ) {
+  //   throw new ApiError(400, "All fields must be filled in");
+  // }
   if (
-    [name, email, password].some(function (field) {
-      field.trim() === "";
-    })
+    [name, email, password, phoneNumber].some(
+      (field) => !field || field.trim() === ""
+    )
   ) {
     throw new ApiError(400, "All fields must be filled in");
   }
@@ -40,11 +47,12 @@ const RegisterUser = asyncHandler(async (req, res) => {
 
   const ImageFile = req.file;
   const UploadedImage = await UploadImages(ImageFile.filename, {
-    folderStructure: `all-users`,
+    folderStructure: `all-user/${name.split(" ").join("-")}/user-Image`,
   });
+
   const newUser = await User.create({
     name,
-    number,
+    phoneNumber,
     email,
     password,
     images: {
@@ -73,7 +81,7 @@ const RegisterUser = asyncHandler(async (req, res) => {
   //   `<b><h1>Congratulations Mr./Mrs. ${name} </h1>,<br/> <h3>You have successfully register to JARVIS.<br/>
   //   Here are your Account details
   //     Name:${name}
-  //     Contact:${number}
+  //     Contact:${phoneNumber}
   //     Email:${email}
   //  </h3> <b/>`
   // );
@@ -101,6 +109,7 @@ const RegisterUser = asyncHandler(async (req, res) => {
       )
     );
 });
+
 
 const LoginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;

@@ -10,8 +10,8 @@ function App() {
     <div className="bg-[#22242B] h-screen w-screen overflow-hidden text-neutral-400 ">
       <div>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/" element={<Register />} />
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Register />} /> */}
         </Routes>
       </div>
     </div>
